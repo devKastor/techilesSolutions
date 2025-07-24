@@ -1,0 +1,520 @@
+prompt techiles solution 
+Nom officiel du projet : TechÎle Solutions (nom permanent)
+Trois espaces principaux :
+Site vitrine public (bilingue)
+Présentation des services
+Coordonnées
+Lien vers portail client
+Portail client sécurisé :
+Création de compte (par le client ou l’admin)
+Choix des services / options modulaires
+Suivi des billets
+Historique des interventions
+Espace Admin :
+Gestion des clients
+Gestion des billets (appels de service)
+Module interventions physiques
+Module CRM/Support
+Espace Comptabilité autonome
+Facturation
+Dépenses (incluant toiture, essence, outils, etc.)
+Reçus (upload possible)
+Export fiscal
+🛠️ SECTION 2 — GESTION DES INTERVENTIONS ET FACTURATION LIÉE
+📌 Création d’un billet (appel de service)
+Un billet d’intervention ne peut être créé que pour un client déjà existant dans la base.
+Le client peut :
+Soit créer son propre compte
+Soit être créé manuellement par l’admin
+Dans tous les cas, un billet est obligatoirement lié à un client existant (pas de billets anonymes).
+🧩 Éléments du billet à la création :
+Client concerné (sélection obligatoire parmi les clients existants)
+Planification de l’intervention :
+Date
+Heure
+Durée estimée
+Lieu d’intervention (s’il diffère de l’adresse client)
+Résumé du problème
+Informations personnalisées sur les lieux ou l’installation :
+Exemple : codes d’accès, type de matériel sur place, configuration réseau, etc.
+Historique des interventions précédentes automatiquement accessible
+Assignation à un technicien (même si le technicien = toi)
+Commentaires techniques internes (non visibles au client)
+🔁 Gestion du statut du billet (workflow) :
+Ouvert (par défaut)
+En cours
+Reporté
+Résolu
+Fermé (→ active l’étape de facturation)
+Annulé
+À chaque changement de statut, des actions automatiques peuvent être déclenchées :
+Envoi de notification au client
+Ajouter un champ "urgence" ou "niveau critique" pour les interventions (ça peut déclencher une tarification spéciale ou un traitement prioritaire)
+Possibilité d’inclure une signature électronique du client lors de la fermeture (utile en contexte légal ou litige)
+Mise à jour de l’agenda interne
+Ajout à la file de facturation si "Fermé"
+🔧 Actions disponibles (interface admin ou technicien) :
+Modifier billet
+Ajouter des pièces jointes (photo, PDF, scan, capture)
+Ajouter des notes internes
+Historique complet des changements
+Dupliquer billet
+Lier à d'autres billets (suivi d’une panne, ou intervention planifiée en série)
+📤 Liaison automatique à la facturation :
+Quand un billet est marqué comme "Fermé", il devient visible dans le module de facturation, avec les informations suivantes pré-remplies :
+Client
+Date / Heure de l’intervention
+Détails saisis dans le billet
+Éventuels frais supplémentaires cochés (déplacement, matériel, temps supplémentaire...)
+L’admin (ou le technicien avec droits) peut alors :
+Vérifier et ajuster le brouillon de la facture
+Valider l’envoi en un clic
+🧠 Possibilité d’envoyer plusieurs factures d’un coup en fin de journée via une page d’aperçu groupée ("Factures en attente d’envoi").
+💳 Intégration Stripe
+Les factures envoyées contiennent un lien de paiement Stripe (paiement par carte bancaire).
+Le client peut accéder à son historique de paiements dans son espace client.
+Les mentions légales (CGUs) devront inclure :
+"Les paiements sont sécurisés et traités via Stripe, une plateforme de paiement tierce. Aucune donnée bancaire n’est stockée sur TechÎle Solutions."
+👥 Côté client (dans son portail)
+Il peut créer un billet (mais ne peut choisir de technicien)
+Il peut suivre l’évolution de ses billets : statut, date, commentaires
+Il peut payer ses factures en ligne (Stripe)
+Il peut consulter l’historique complet de ses interventions
+SECTION 3 : CRM ADMIN & GESTION FINANCIÈRE
+Objectif principal
+Offrir à l'administrateur (dev@kastor.ca) un système complet pour :
+Gérer les clients, les appels de service, les techniciens
+Suivre la facturation et les paiements
+Suivre les dépenses d'entreprise (loi travailleur autonome)
+Archiver et justifier les activités économiques (pièces jointes, documents fiscaux)
+🏢 Gestion des clients
+Visualiser la liste de tous les clients (qu'ils se soient auto-créés ou créés manuellement par l'admin)
+Recherche par nom, adresse courriel, numéro de téléphone
+Possibilité d'éditer leurs infos, voir leur historique de billets et de facturation
+Fusionner deux fiches clients similaires si même email/téléphone
+Attribuer des notes internes, des niveaux de priorité, ou une balise personnalisée (ex: "Client complexe"). Ces balises permettront une migration future dans le Hub des Îles, avec conservation de l’historique et continuité de service via TechÎle Solutions.
+💼 Appels de service & techniciens
+Intégration avec la section "Appels de service" déjà établie
+Création d’un billet lié uniquement à un client existant (auto-inscrit ou enregistré par l’admin)
+Étapes : planification, lieu, résumé, historique, assignation, commentaires techniques internes
+Statuts : Ouvert, En cours, Reporté, Résolu, Fermé, Annulé (avec actions déclenchées selon le statut)
+Possibilité d’assigner manuellement ou automatiquement des techniciens (fonction utile en cas d'équipe)
+Exportation des données d’intervention (PDF, rapport CSV)
+Ajout de commentaires internes, annexes, checklistes
+Lorsqu’un billet est terminé, il peut être transféré en zone facturation avec un seul clic (pour validation ou envoi de facture)
+💳 Facturation et paiements (via Stripe)
+Liste des factures émises : client, date, montant, statut (payé, en attente, en retard)
+Bouton "Envoyer facture" (après validation manuelle ou automatique depuis billet)
+Envoi groupé de toutes les factures validées
+Liens de paiement Stripe créés automatiquement
+Les factures et relances de paiement sont envoyées par courriel automatiquement, dès qu’un statut le justifie (ex : facture en retard)
+Intégration future de paiement récurrent ou à la carte (Stripe Checkout, paiement direct, ou terminal)
+Ajout de mentions légales Stripe dans les CGU
+Charte de prix côté admin : permet de configurer et ajuster les tarifs à la carte (cloud, support, web, etc.) sans affichage public
+Intégrer un système de codes de réduction ou de facturation exceptionnelle (remise, test gratuit, etc.)
+Ajouter une fonction d’abonnement récurrent automatique côté client si tu actives le mode SaaS pur
+📅 Gestion des dépenses professionnelles (obligations travailleur autonome)
+Formulaire pour ajouter une dépense
+Type : équipement, déplacement, téléphonie, réparation, autre
+Montant
+Date
+Description
+Client associé (facultatif)
+Pièce justificative (upload PDF, image)
+Filtres et export : par mois, client, type, remboursable/non
+Total déductible automatique pour le rapport annuel
+Ajouter une catégorie "facture fournisseur" vs "frais client" pour séparer ce que tu récupères vs ce qui reste à ta charge
+☁️ Sauvegarde cloud client (Google Drive sécurisé)
+Chaque client ayant souscrit au service cloud dispose d’un dossier unique sur le compte Google Drive (5 To)
+Le client ne voit que SON dossier (permissions privées)
+Ce dossier sert :
+de dépôt manuel
+ou de destination pour les sauvegardes automatisées
+Visibilité dans le portail client :
+Barre de progression (quota utilisé)
+Navigation fichiers
+Téléversement manuel ou synchronisation via script local
+Alertes automatiques : espace presque plein, dépassement, échec de sauvegarde
+Lié au système de facturation (selon quota ou formule personnalisée)
+Conforme RGPD / Loi canadienne / CGU (fichiers illicites interdits)
+Seuls les clients des Îles peuvent bénéficier d’intervention physique. Les clients hors territoire ne peuvent souscrire qu’au cloud.
+🧱 Création de site web client (inclus dans TechÎle Solutions)
+Offres disponibles (liées aux forfaits ou sur demande) :
+Site vitrine simple :
+Une page avec logo, sections "Notre mission", "À propos", "Nous contacter"
+Header/footer personnalisés aux coordonnées du client
+Tarif cible : 20 $/mois ou 200 $/an (hébergement inclus)
+Site multi-sections :
+Jusqu’à 5 pages, incluant : Équipe, Services, Galerie, Témoignages
+Formulaire de contact fonctionnel
+Intégration responsive (desktop + mobile)
+Tarif cible : 49 $/mois ou 499 $/an
+Site e-commerce léger :
+Catalogue jusqu’à 20 produits
+Paiement en ligne (Stripe intégré)
+Suivi de commandes et gestion de stock simple
+Tarif cible : 89 $/mois ou 899 $/an
+Sites générés avec Bolt selon prompt structuré
+Toutes les structures de code générées doivent être strictement typées pour éviter erreurs futures
+Intégration directe avec le CRM admin pour maintenance, support, et facturation du client
+📁 Archiver / Historiser
+Chaque billet, facture, paiement, client ou dépense est historisé
+Possibilité d’accéder à tous les rapports (intervention, compta, etc.)
+Export PDF ou CSV
+🔔 Notifications (uniquement internes à l’interface)
+Pas de SMS ni de notification push
+Notifications visibles seulement une fois connecté à l’interface
+Notifications client :
+Paiement en retard
+Nouveau billet résolu
+Quota cloud presque plein
+Prochain rendez-vous à venir
+Nouveaux services disponibles
+SECTION 4 : ESPACE CLIENT (PORTAIL)
+Objectif principal
+Permettre au client de :
+Gérer ses services à la carte (intervention, cloud, site web)
+Suivre ses interventions, factures, et stockages
+Adapter son forfait sans intervention manuelle
+🏠 Tableau de bord personnalisé
+Tu peux offrir une vue "tableau de bord simplifié" pour les clients moins à l’aise tech
+Affichage général : résumé de ses services actifs
+Indicateurs :
+Prochain rendez-vous planifié
+Dernier billet d'intervention résolu
+Statut des dernières factures
+% du quota cloud utilisé
+Services additionnels proposés par TechÎle
+🧑‍🔧 Appels de service
+Création directe par le client via formulaire simple
+Consultation de l'historique d’interventions
+Statuts visibles en temps réel (Ouvert, En cours, Résolu...)
+Commentaires résumés de l’intervention (transmis par technicien)
+Pièces jointes accessibles (photos, PDF, diagnostics)
+💾 Espace de sauvegarde cloud (si activé)
+Affichage du quota alloué / utilisé (ex: 20 Go sur 50 Go)
+Upload manuel de fichiers dans le dossier client (Drive API sécurisé)
+Aucune visibilité sur d’autres clients
+Alertes internes si :
+quota atteint
+échec de sauvegarde
+Synchronisation automatique possible via script MeshAgent local
+🧮 Factures et paiements
+Liste de toutes les factures (PDF téléchargeables)
+Bouton de paiement (Stripe)
+Historique de paiements
+Alertes visibles dans le portail :
+Paiement en retard
+Facture disponible
+Envois automatiques par courriel des factures et rappels
+🧩 Services à la carte
+Menu permettant d’ajouter/modifier :
+Espace de stockage (ex : +10 Go / +5 $)
+Fréquence d’assistance (mensuel, annuel, à la demande)
+Création d’un site web
+Demande spéciale (demande traitée par l'admin)
+Tarifs mis à jour automatiquement via la charte de prix (admin)
+📆 Rendez-vous et calendrier
+Visualisation des interventions planifiées
+Lien de confirmation (si planification faite par admin/tech)
+Rappel interne du rendez-vous à venir
+🛡️ Limitations géographiques
+Message affiché pour les clients hors Îles :
+"Les interventions physiques ne sont pas disponibles dans votre région. Seuls les services cloud ou web sont accessibles."
+Blocage automatique de la création d'intervention physique si hors zone (géolocalisation ou adresse inscrite)
+📌 Notes et documentation (en lecture seule)
+Historique de notes internes visibles sur le portail (partie rendue publique par l’admin si jugée pertinente)
+Possibilité d’inclure des manuels, guides ou recommandations techniques post-intervention
+🗂 Historique complet
+Liste des billets passés, interventions closes, factures réglées
+Filtres par année, statut, type d’intervention
+🔐 Sécurité & confidentialité
+Portail 100% privé, protégé par mot de passe
+Aucun contenu partagé entre clients
+Aucune notification push ni SMS
+Toutes les notifications visibles uniquement via ce portail
+💬 Évolution possible
+Ajout futur d’un système de messagerie client ↔ admin/tech
+Possibilité de recevoir des documents techniques, guides, vidéos dans l'espace client
+Espace boutique de services (ajouter un domaine, hébergement supplémentaire, etc.)
+SECTION 5 — TABLEAU DE BORD ADMIN & STRATÉGIE D’ABONNEMENT
+🎯 Objectif
+Permettre à l’administrateur de TechÎle Solutions de piloter l’ensemble de l’entreprise via un tableau de bord clair, modulaire et extensible, tout en assurant la viabilité économique du projet dès les premiers clients.
+📊 Tableau de bord admin : Vue synthétique en temps réel
+Indicateurs clés (KPI) à afficher sur la page d’accueil admin :
+Nombre total de clients
+Répartition des clients par type de service (cloud, web, intervention, combo)
+Total facturé ce mois-ci / Total payé
+Interventions en attente / en cours / résolues (statistiques live)
+Taux de retard de paiement (% sur les 3 derniers mois)
+Occupation du quota cloud total (% utilisé)
+Coût opérationnel estimé vs revenu généré (approximatif)
+Nombre de billets ouverts par client / Moyenne de résolution
+Fonctionnalités supplémentaires :
+Filtre par période (jour, semaine, mois, année)
+Bouton "export PDF" / CSV du rapport actuel
+Affichage de messages internes (ex : "mise à jour en attente", "maintenance prévue")
+Historique des dernières actions administrateur
+🧮 Stratégie de tarification et charte de prix (côté admin)
+But : permettre une adaptation des tarifs à chaque client ou groupe de clients sans exposer publiquement les prix.
+Structure de la charte de prix :
+Interface d’édition sécurisée (admin uniquement)
+Catégories tarifaires paramétrables :
+Sauvegarde cloud : base 50 Go = 9 $/mois, +10 Go = 5 $
+Intervention physique : 59 $ de base + frais déplacement + options techniques
+Création site web :
+Vitrine 1 page : 20 $/mois ou 200 $/an
+Multi-sections : 49 $/mois ou 499 $/an
+E-commerce : 89 $/mois ou 899 $/an
+Maintenance web : +10 $/mois
+Ajout domaine personnalisé : +8 $/mois
+Option "Diagnostic prioritaire 24h" : +15 $
+Fonctionnalités liées à la charte :
+Mise à jour dynamique des factures générées (selon services actifs du client)
+Système d’exceptions / remises spécifiques par client
+Historique de modifications tarifaires appliquées (pour audit)
+💼 Modèle économique cible (scénario de rentabilité)
+Hypothèse de base : 20 clients actifs dès la première phase (objectif réaliste).
+Objectif mensuel minimum (salaire net visé) : 4000 $
+Structure suggérée des offres pour atteindre l’objectif :
+5 clients cloud uniquement (9 $ à 14 $/mois) = ~60 $
+5 clients site vitrine (20 $ à 29 $/mois) = ~125 $
+5 clients multi-sections (49 $/mois) = 245 $
+5 clients e-commerce + support (89 $ + 10 $) = 495 $
+15 clients reçoivent intervention 1×/mois (~80 $ moyens facturés) = 1200 $
+Moyenne de revenus accessoires / extra : 400 $
+Total mensuel estimé : ~2525 $ brut récurrent + 1200 $ ponctuel + extras = ~3700–4200 $ selon variation
+🔁 Ce modèle peut être réajusté dynamiquement via la charte admin en cas d’augmentation de clientèle ou de services offerts.
+🧾 Suivi et archivage des actions
+Espace de 500 Go réservé exclusivement au stockage des fichiers de logs techniques.
+Un fichier log par client est généré automatiquement à chaque connexion, interaction ou intervention détectée.
+Format journalier : 1 fichier log / client / jour si activité détectée.
+Les logs ne sont pas directement consultables dans l’interface mais sont archivés à des fins d’audit et de sécurité.
+En cas de litige ou incident, les logs permettent de remonter l’historique complet des actions.
+Rotation automatique des fichiers et suppression au-delà de la période définie (ex: 18 mois) si souhaité.
+🔒 Sécurité, visibilité et contrôle
+L’accès à la charte est réservé aux comptes admin confirmés
+Possibilité d’ajouter des rôles (admin, technicien, lecture seule, etc.)
+Tous les changements sont journalisés (log horodaté, utilisateur)
+Versionnage de la charte (permet de revenir à un ancien modèle si erreur ou abus)
+📈 Évolution possible
+Intégration de modules de prévision : combien rapporterait un client supplémentaire par type
+Alerte automatique si seuil critique atteint (quota cloud dépassé, facturation manuelle non faite, client inactif depuis X jours)
+Liaison future avec un assistant IA pour suggérer les services optimaux à proposer par profil client
+Résumé :
+Ce tableau de bord est le cœur décisionnel de TechÎle Solutions. Il permet à l'administrateur de rester maître de sa rentabilité, d’optimiser ses offres, de contrôler les flux, et d’adapter ses services sans jamais devoir exposer ses logiques internes. Il rend la gestion prévisible, professionnelle, extensible et traçable.
+## SECTION 6 — STRUCTURE TECHNIQUE & DÉPLOIEMENT
+### 📏 Objectif
+Garantir une base solide, sécurisée et scalable pour assurer la fiabilité de TechÎle Solutions sur le long terme, tout en permettant des interventions rapides en cas de panne, une maintenance fluide, et une interopérabilité avec les outils externes (Google Drive, Stripe, Bolt…). Il est impératif que l’ensemble du code soit strictement typé et sans aucune erreur de compilation afin d’assurer une exécution fluide et fiable en production. Toute la base de code doit être vérifiée de manière rigoureuse pour garantir une compatibilité complète avec les exigences d’un environnement prêt à produire.
+---
+### 🔧 Technologies principales utilisées
+| Domaine             | Technologie choisie                | Justification principale                                    |
+| ------------------- | ---------------------------------- | ----------------------------------------------------------- |
+| Backend             | Firebase Functions (Node.js)       | Facile à maintenir, scalable, accès aux APIs Google         |
+| Base de données     | Firebase Firestore                 | Temps réel, structuration flexible, sécurité granulaire     |
+| Authentification    | Firebase Auth                      | Gestion sécurisée des comptes (client/admin)                |
+| Frontend            | Next.js (Bolt base)                | Rapidité, SSR + API intégrée, excellent avec Firebase       |
+| Paiements           | Stripe Checkout / API              | Conforme, fiable, facile à intégrer                         |
+| Sauvegarde cloud    | Google Drive API (Service Account) | Stockage client isolé, quota élevé, automatisation possible |
+| Journalisation      | Google Cloud Storage (500Go log)   | Stockage optimisé des logs techniques par client            |
+| Génération site web | Bolt                               | Prompt structuré → génération rapide et typée               |
+---
+### ⚙️ Déploiement initial
+* Utilisation d’un projet Firebase (Blaze plan) :
+  * Hébergement
+  * Authentification
+  * Firestore DB
+  * Functions (REST sécurisées)
+  * Cloud Storage (Logs)
+* Nom de domaine : `techilesolutions.ca`
+  * Configuration des sous-domaines si besoin (client1.techilesolutions.ca…)
+* Environnement de staging en local (localhost / port dédié) pour tests
+* Déploiement production via `firebase deploy` ou CI/CD (GitHub Actions possible)
+---
+### 🔐 Sécurité des accès
+* Règles Firestore sécurisées selon rôle utilisateur (`isAdmin`, `isClient`)
+* Toutes les requêtes API passent par Firebase Auth + vérification rôle
+* Les fichiers dans Google Drive sont :
+  * Créés sous compte de service
+  * Isolés par permissions (un client = un seul dossier privé)
+* Aucune donnée sensible stockée côté client (frontend)
+* Tokens JWT vérifiés à chaque action critique (paiement, intervention…)
+---
+### 🧠 Sauvegardes & logs système
+* Si le dossier client Google Drive n'existe pas, il est créé automatiquement via l’API Drive
+* Logs clients (500Go) : 1 fichier journalier / client si activité détectée
+* Nom standardisé : `log_YYYY-MM-DD_clientID.json`
+* Rotation mensuelle avec compression automatique
+* Stockés sur Google Cloud Storage (non accessible frontend)
+* Backup automatique hebdo de Firestore + fonctions (via script)
+---
+### 📦 Architecture récapitulative
+```
+Client → Next.js Frontend (via Bolt) → Firebase Auth
+     ⤷                  ⤷
+   Sauvegarde    →       Firestore DB
+                    ⤷   Firebase Functions (API)
+                      ⤷ Google Drive (Service Account)
+                       ⤷ Stripe API (paiement)
+                        ⤷ Google Cloud Storage (Logs)
+```
+---
+### 🛠️ Maintenance & mise à jour
+* Tous les scripts de maintenance liés à MeshCentral sont liés aux forfaits clients
+* L’espace admin permet de :
+  * Forcer une synchronisation cloud
+  * Relancer une sauvegarde
+  * Consulter les journaux de maintenance (en lecture technique)
+* Les sites web clients générés via Bolt peuvent être :
+  * Re-téléchargés, mis à jour ou supprimés à distance
+  * Liés à un domaine client ou hébergés sur `techilessolutions.web.app`
+SECTION 7 — ABONNEMENT & MODÈLE DE MONÉTISATION
+🎯 Objectif
+Structurer des revenus récurrents, viables et évolutifs pour TechÎle Solutions à travers un mix de services facturés à la tâche, de forfaits mensuels, et de solutions web. Cette section s’adresse principalement au cahier des charges stratégique — elle n’est pas directement destinée à Bolt, mais oriente la configuration des prompts, des règles de facturation, et des composants à générer côté plateforme.
+💰 Grille des services (tarifs de base)
+Service	Mode	Tarif cible (hors taxes)
+Intervention sur site (Îles)	Horaire	60 $ / h + déplacement
+Sauvegarde cloud (Drive)	Mensuel	10 $ / 50 Go
+Site vitrine (1 page)	Mensuel ou annuel	25 $ / mois ou 250 $ / an
+Site PME complet (multi-sections)	Mensuel ou annuel	60 $ / mois ou 600 $ / an
+Site e-commerce basique	Mensuel ou annuel	90 $ / mois ou 900 $ / an
+Maintenance informatique (locale)	Forfait mensuel (Base → +)	25 $ → 120 $ selon niveau
+Support technique à distance	Horaire	75 $ / h
+Déplacement	À la tâche	0,65 $ / km ou zones fixes
+📦 Forfaits mensuels (récapitulatif)
+Forfait BASE — 25 $/mois
+•	- 1 billet / mois
+•	- Sauvegarde cloud : 10 Go
+•	- Accès au portail client
+Forfait STANDARD — 45 $/mois
+•	- 2 interventions
+•	- Sauvegarde cloud : 50 Go
+•	- 10 % rabais site web
+•	- Suivi priorisé dans les 48h
+Forfait PLUS — 75 $/mois
+•	- 4 interventions / mois
+•	- Cloud : 100 Go
+•	- Maintenance proactive MeshCentral
+•	- Domaine web offert si création de site
+Forfait PRESTIGE — 120 $/mois
+•	- Interventions illimitées (Îles)
+•	- Sauvegarde : 250 Go
+•	- Domaine + hébergement inclus
+•	- Maintenance complète proactive
+•	- Traitement prioritaire
+🔄 Facturation automatisée
+•	- Stripe intégré pour tous les paiements récurrents ou ponctuels
+•	- Facture PDF générée + envoyée automatiquement (facturation = PUSH mail)
+•	- Option de facturation annuelle avec 2 mois gratuits
+•	- Rappels automatiques en cas de retard
+•	- Suspension après 15 jours de non-paiement
+•	- L’admin peut valider les interventions avant envoi groupé des factures (fin de journée)
+🎁 Promos & codes admin
+•	- Ajout de périodes d’essai (ex : 7 jours offerts)
+•	- Réduction manuelle possible sur un compte (code ou rôle attribué)
+•	- Grille de prix modifiable dans l’espace admin (vue privée)
+⚖️ Objectif de rentabilité
+Avec 20 clients :
+•	- Objectif minimal : 4000 $/mois → répartis entre les services (sites, maintenance, cloud)
+•	- Objectif cible : 7500 $/mois pour salaire viable
+La structure tarifaire est donc conçue pour :
+•	- Avoir des forfaits abordables localement (Îles)
+•	- Compenser via services web/cloud à l’extérieur
+•	- Évoluer vers du revenu mixte stable (forfaits + web + cloud)
+SECTION 8 — SUPPORT CLIENT & GESTION DES PROBLÈMES
+🎯 Objectif
+Offrir une expérience client fluide, professionnelle et traçable, que ce soit pour les demandes de support technique, les problèmes de facturation, les questions générales ou les remarques liées aux services TechÎle.
+📥 Création de demandes / problèmes
+Le client peut créer un billet de support depuis son portail
+Choix du type de problème : technique, facturation, demande générale
+Champ texte + pièce jointe facultative
+L’admin peut aussi créer un ticket au nom du client (ex : appel, SMS, courriel)
+Assignation possible à un technicien ou un gestionnaire
+Option de catégoriser le ticket (ex. : Problème critique, Mise à jour requise, etc.)
+🔁 Suivi du ticket
+Statuts :
+Ouvert
+En cours
+Résolu
+Fermé
+Annulé (le client ou l’admin peut annuler)
+Possibilité d’ajouter :
+Commentaires internes (invisibles du client)
+Réponses visibles du client
+Liens vers d’autres tickets ou interventions passées
+Historique complet visible par l’admin
+Le client peut évaluer une résolution (optionnel)
+🧩 Notifications intégrées
+Les clients voient les mises à jour de leur ticket directement dans leur portail (pas de push)
+Ils peuvent filtrer les problèmes ouverts, en attente ou passés
+L’interface permet un fil de discussion clair (type messagerie)
+🧠 Système de notes et indicateurs
+Pour chaque client, un système de notes internes est accessible par l’admin :
+Comportement client (bon payeur, difficile, besoin de suivi, etc.)
+Historique de satisfaction
+Alertes personnalisées
+Ces notes sont non visibles par le client
+Permet de prioriser ou ajuster le traitement des problèmes sensibles
+🔧 Outils techniques liés
+Possibilité de lier une intervention technique (MeshCentral, appel) à un ticket
+Suivi automatisé si l’intervention résout le problème
+Génération de rapports internes sur le temps de réponse ou le taux de satisfaction
+SECTION 9 — CONCEPTION DE SITES WEB POUR CLIENTS
+🎯 Objectif
+Offrir un service de création de site web simple, abordable et clé en main aux clients TechÎle. Ce service est intégré dans le portail client et s’appuie sur une génération semi-automatisée de modèles via Bolt, avec personnalisation minimale et hébergement inclus.
+🧱 Types de sites proposés
+Type de site	Contenu inclus	Tarif	Mode de facturation
+Site Vitrine	1 page avec logo, mission, à propos, nous contacter (formulaire), pied de page	250 $ / an ou 25 $ /mois	Annuel ou mensuel
+Site PME Classique	4–6 pages (accueil, services, équipe, contact, mission, etc.), CMS simplifié	600 $ / an ou 60 $ /mois	Annuel ou mensuel
+E-commerce Basique	Jusqu'à 20 produits, panier, paiement Stripe, mentions légales obligatoires	900 $ / an ou 90 $ /mois	Annuel ou mensuel
+Les sites sont hébergés sur le domaine techilessolutions.web.app avec option de domaine personnalisé (offert selon forfait).
+🛠️ Génération automatique (Bolt)
+Bolt génère automatiquement la structure de base (React / Next.js)
+L’admin peut injecter :
+Logo fourni par le client
+Texte sur la mission ou description
+Coordonnées de contact
+Liens sociaux ou info Google Maps
+Le code est corrigé strictement (aucune erreur de type)
+Contrôle final avant mise en ligne
+🔐 Hébergement et domaine
+Hébergement Firebase Hosting (.web.app)
+Option de domaine personnalisé (client.com) disponible :
+Inclus pour forfaits PLUS et PRESTIGE
+25 $ / an sinon
+Aucune maintenance technique requise pour le client
+Sauvegarde du site mensuelle automatique (Git ou zip)
+💡 Avantages client
+Site en ligne sous 5 jours ouvrables après réception des éléments
+Édition possible via demande manuelle à l’équipe TechÎle
+SEO de base inclus
+Interface rapide et responsive
+Nom de domaine géré par TechÎle (renouvellement annuel automatique)
+SECTION 10 — GESTION DES JOURNAUX & TRAÇABILITÉ
+🎯 Objectif
+Assurer un suivi complet, journalisé et conforme des activités techniques, interventions, connexions et opérations client sur l’ensemble des services TechÎle (portail, cloud, maintenance), à des fins de diagnostic, de preuve ou d’audit interne.
+🧾 Données journalisées (logs)
+Connexion/déconnexion client (portail ou outils liés)
+Création/modification de billets d’intervention
+Téléversements / téléchargements dans l’espace cloud
+Exécution de scripts de maintenance (MeshCentral)
+Tentatives de paiements / facturation
+Toute activité significative liée à la plateforme
+🗂️ Organisation des logs
+Un dossier de logs par client, dans un répertoire distinct du cloud client
+Un fichier journal par jour actif, généré automatiquement
+Format : .log texte ou .json lisible (UTC + horodatage précis)
+🔐 Hébergement & stockage
+Utilisation d’un espace dédié de 500 Go, réservé uniquement aux logs
+Localisation : Google Drive via compte de service sécurisé
+Les logs ne sont jamais visibles par le client
+Conservation : 1 an minimum, purge automatisée possible au-delà
+⚠️ Conformité et sécurité
+Chiffrement des logs (au besoin)
+Accès restreint à l’équipe TechÎle seulement (admin)
+Journalisation protégée contre l’édition manuelle
+Permet la reconstitution chronologique d’événements en cas de litige ou bug
+🔧 Exemple d’usage
+Un client se plaint d’un bug : le log permet de retracer l’activité exacte
+Une erreur de facturation ? Vérification possible dans l’historique journalisé
+Suivi interne des techniciens sans intrusion dans les données clients
